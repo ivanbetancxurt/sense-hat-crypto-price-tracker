@@ -11,8 +11,24 @@ API_KEY = os.environ.get('API_KEY')
 # colors
 BLACK = [0, 0, 0]
 WHITE = [255, 255, 255]
+BTC_YELLLOW = [252, 186, 3]
+ETH_PURPLE = [165, 66, 227]
+XRP_GREEN = [68, 179, 46]
+SOL_CYAN = [52, 235, 189]
 
-class Cursor():
+# main menu UI
+BACKGROUND = [
+    BLACK, BTC_YELLLOW, BTC_YELLLOW, BLACK, BLACK, ETH_PURPLE, ETH_PURPLE, BLACK,
+    BTC_YELLLOW, BTC_YELLLOW, BTC_YELLLOW, BTC_YELLLOW, ETH_PURPLE, ETH_PURPLE, ETH_PURPLE, ETH_PURPLE,
+    BTC_YELLLOW, BTC_YELLLOW, BTC_YELLLOW, BTC_YELLLOW, ETH_PURPLE, ETH_PURPLE, ETH_PURPLE, ETH_PURPLE,
+    BLACK, BTC_YELLLOW, BTC_YELLLOW, BLACK, BLACK, ETH_PURPLE, ETH_PURPLE, BLACK,
+    BLACK, XRP_GREEN, XRP_GREEN, BLACK, BLACK, SOL_CYAN, SOL_CYAN, BLACK,
+    XRP_GREEN, XRP_GREEN, XRP_GREEN, XRP_GREEN, SOL_CYAN, SOL_CYAN, SOL_CYAN, SOL_CYAN,
+    XRP_GREEN, XRP_GREEN, XRP_GREEN, XRP_GREEN, SOL_CYAN, SOL_CYAN, SOL_CYAN, SOL_CYAN,
+    BLACK, XRP_GREEN, XRP_GREEN, BLACK, BLACK, SOL_CYAN, SOL_CYAN, BLACK
+]
+
+class MainMenu():
     def __init__(self):
         # initial cursor position
         self.x= 0
@@ -20,15 +36,15 @@ class Cursor():
         
         self.touched = False # flag for whether user has made any input
 
-    # track and display cursor depending on user input
-    def track_cursor(self):
-        inputs = sense.stick.get_events()  # get list of joystick inputs
-        
-        prev_x, prev_y = self.x, self.y # get previous cursor position
-
+    # display main meny
+    def display(self):
         # display cursor at (0, 0) at the start of program
         if not self.touched:
+            sense.set_pixels(BACKGROUND)
             sense.set_pixel(self.x, self.y, WHITE)
+
+        inputs = sense.stick.get_events()  # get list of joystick inputs
+        prev_x, prev_y = self.x, self.y # get previous cursor position
 
         # update cursor position
         for input in inputs:
@@ -44,11 +60,13 @@ class Cursor():
                     self.x = (self.x + 1) % 8
         
                 # update screen
-                sense.set_pixel(prev_x, prev_y, BLACK)
+                sense.set_pixels(BACKGROUND)
+                sense.set_pixel(prev_x, prev_y, BACKGROUND[(prev_y * 8) + prev_x])
                 sense.set_pixel(self.x, self.y, WHITE)
-                
 
-cursor = Cursor()
+
+main_menu = MainMenu()
 sense.clear()
+
 while True:
-    cursor.track_cursor()
+    main_menu.display()
