@@ -2,12 +2,13 @@ import constants
 
 class MainMenu():
     def __init__(self, sense):
+        self.sense = sense # sense hat
+
         # initial cursor position
         self.x= 0
         self.y = 0 
         
         self.touched = False # flag for whether user has made any input
-        self.sense = sense # sense hat
 
     # display main menu
     def display(self):
