@@ -23,7 +23,12 @@ class Chart():
         for day in days:
             params['days'] = day # set day parameter 
             res = req.get(f'{constants.URL}/{self.coin_id}/ohlc', params=params) # fetch data
-            print(f'DAYS {day}: {res.json()}')
+            
+            if res.status_code == 200: # if the api responds successfully...
+                self.candles[day] = res.json()[-8:] # store the last 8 candles
+            else:
+                # todo: error handling
+                print('oh no :(')
 
     def display(self):
         pass
