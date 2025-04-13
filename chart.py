@@ -6,8 +6,11 @@ class Chart():
     def __init__(self, coin_id):
         self.coin_id = coin_id 
         self.candles = defaultdict(list) # store for candle data
+        self.price_mins = {} # minimum prices of all candles per 'day' parameter
+        self.price_ranges = {} # (max_price - min_price) per 'day' parameter
+        self.scales = {} # scaling factor (how many pixels per unit of price)
 
-    # get candles data from api
+    # get candles data from api and populate fields for displaying
     def fetch_candles(self):
         days = ['1', '7', '90'] # options for 'day' paramters, maps to 30 min, 4 hours, 4 days interval per candle
 
@@ -22,16 +25,37 @@ class Chart():
 
         for day in days:
             params['days'] = day # set day parameter 
-            res = req.get(f'{constants.URL}/{self.coin_id}/ohlc', params=params) # fetch data
+            res = req.get(f'{constants.URL}/{self.coin_id}/ohlc', params=params, headers=headers) # fetch data
             
             if res.status_code == 200: # if the api responds successfully...
                 self.candles[day] = res.json()[-8:] # store the last 8 candles
+
+                lows, highs = [], [] # initialize arrays for lowest and highest prices to find extrema
+                for candle in self.candles[day]:
+                    _, open, low, high, close = candle
+                    lows.append(low)
+                    highs.append(high)
+
+                    # color the candle appropriately by appending to the list
+                    if open >= close:
+                        candle.append(constants.GREEN)
+                    else:
+                        candle.append(constants.RED)
+                
+                self.price_mins[day] = min(lows)
+                self.price_ranges[day] = max(highs) - self.price_mins[day]
+                self.scales[day] = 7 / self.price_ranges[day]
             else:
                 # todo: error handling
-                print('oh no :(')
+                print('oh no')
 
+    # display chart
     def display(self):
-        pass
+        
+        #todo: for now, choice of day parameter (1) is hardcoded 
 
-chart = Chart('bitcoin')
-chart.fetch_candles()
+        if not self.candles: #! for now, do not re-compute candles
+            self.fetch_candles()
+            
+        for candle in self.candles['1']:
+            print(len(candle))
