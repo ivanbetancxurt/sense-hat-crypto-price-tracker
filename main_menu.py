@@ -9,7 +9,7 @@ class MainMenu():
         self.touched = False # flag for whether user has made any input
         self.sense = sense # sense hat
 
-    # display main meny
+    # display main menu
     def display(self):
         # display cursor at (0, 0) at the start of program
         if not self.touched:

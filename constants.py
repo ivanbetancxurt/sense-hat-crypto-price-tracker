@@ -1,3 +1,13 @@
+import os
+from dotenv import load_dotenv
+
+# url
+URL = 'https://api.coingecko.com/api/v3/coins'
+
+# api key
+load_dotenv()
+API_KEY = os.environ.get('API_KEY')
+
 # colors
 BLACK = [0, 0, 0]
 WHITE = [255, 255, 255]

@@ -1,14 +1,8 @@
-import os
 from sense_hat import SenseHat
-from dotenv import load_dotenv
 import constants
 from main_menu import MainMenu
 
 sense = SenseHat()
-
-# get api key
-load_dotenv()
-API_KEY = os.environ.get('API_KEY')
 
 current_screen = 'main' # initialize screen state
 
