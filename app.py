@@ -18,15 +18,14 @@ while True:
     if current_screen == 'main': 
         current_screen = main_menu.display()
 
-    # todo: display() functions for charts should also return screen state like main_menu
     elif current_screen == 'btc': 
-        btc_chart.display()
+        current_screen = btc_chart.display()
 
     elif current_screen == 'eth': 
-        eth_chart.display()
+        current_screen = eth_chart.display()
 
     elif current_screen == 'xrp': 
-        xrp_chart.display()
+        current_screen = xrp_chart.display()
 
     elif current_screen == 'sol': 
-        sol_chart.display()
+        current_screen = sol_chart.display()
