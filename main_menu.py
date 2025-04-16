@@ -36,19 +36,19 @@ class MainMenu():
                     self.x = (self.x + 4) % 8
 
                 elif input.direction == 'middle': # display coin name, update screen state, and don't redraw main menu
-                    if (self.x, self.y) in constants.BTC_AREA:
+                    if (self.x, self.y) == (0, 0):
                         self.sense.show_message('Bitcoin', 0.05)
                         new_screen = 'btc'
                         break
-                    elif (self.x, self.y) in constants.ETH_AREA:
+                    elif (self.x, self.y) == (4, 0):
                         self.sense.show_message('Ethereum', 0.05)
                         new_screen = 'eth'
                         break
-                    elif (self.x, self.y) in constants.XRP_AREA:
+                    elif (self.x, self.y) == (0, 4):
                         self.sense.show_message('XRP', 0.05)
                         new_screen = 'xrp'
                         break
-                    elif (self.x, self.y) in constants.SOL_AREA:
+                    elif (self.x, self.y) == (4, 4):
                         self.sense.show_message('Solana', 0.05)
                         new_screen = 'sol'
                         break
