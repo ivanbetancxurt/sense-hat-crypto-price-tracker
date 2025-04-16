@@ -69,6 +69,7 @@ class Chart():
             for row in range(min(mapped_high, mapped_low), max(mapped_high, mapped_low) + 1):
                 self.sense.set_pixel(i, row, color)
 
+        # go back to main menu if user clicks #todo: this should happen on hold
         for input in self.sense.stick.get_events():
             if input.action == 'pressed':
                 print('back to main menu')

@@ -5,17 +5,17 @@ class MainMenu():
         self.sense = sense # sense hat
 
         # initial cursor position
-        self.x= 0
+        self.x = 0
         self.y = 0 
         
         self.touched = False # flag for whether user has made any input
 
     # display main menu
     def display(self):
-        # display cursor at (0, 0) at the start of program
+        # display cursor at starting position at the start of program
         if not self.touched:
             self.sense.set_pixels(constants.BACKGROUND)
-            self.sense.set_pixel(self.x, self.y, constants.WHITE)
+            self.update_cursor(0, 0, constants.WHITE)
 
         new_screen = 'main' # initialize screen state to be modified and/or returned
 
@@ -27,13 +27,13 @@ class MainMenu():
             if input.action == 'pressed':
                 self.touched = True
                 if input.direction == 'up':
-                    self.y = (self.y - 1) % 8
+                    self.y = (self.y - 4) % 8
                 elif input.direction == 'down':
-                    self.y = (self.y + 1) % 8
+                    self.y = (self.y + 4) % 8
                 elif input.direction == 'left':
-                    self.x = (self.x - 1) % 8
+                    self.x = (self.x - 4) % 8
                 elif input.direction == 'right':
-                    self.x = (self.x + 1) % 8
+                    self.x = (self.x + 4) % 8
 
                 elif input.direction == 'middle': # display coin name, update screen state, and don't redraw main menu
                     if (self.x, self.y) in constants.BTC_AREA:
@@ -54,8 +54,16 @@ class MainMenu():
                         break
 
                 # update screen
-                self.sense.set_pixels(constants.BACKGROUND)
-                self.sense.set_pixel(prev_x, prev_y, constants.BACKGROUND[(prev_y * 8) + prev_x])
-                self.sense.set_pixel(self.x, self.y, constants.WHITE)
+                self.update_cursor(prev_x, prev_y, constants.BLACK)
+                self.update_cursor(self.x, self.y, constants.WHITE)
+                
 
         return new_screen
+
+    def update_cursor(self, x, y, color):
+        for dx in range(4):
+            self.sense.set_pixel(x + dx, y, color) # draw the top and bottom of square
+            self.sense.set_pixel(x + dx, y + 3, color)
+            if dx == 0 or dx == 3: # draw the sides
+                self.sense.set_pixel(x + dx, y + 1, color)
+                self.sense.set_pixel(x + dx, y + 2, color)
