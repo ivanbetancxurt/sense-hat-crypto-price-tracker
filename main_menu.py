@@ -16,7 +16,8 @@ class MainMenu():
 
         # display cursor at starting position at the start of program
         if not self.touched:
-            self.update_cursor(0, 0, constants.WHITE)
+            self.x, self.y = 0, 0
+            self.update_cursor(self.x, self.y, constants.WHITE)
 
         new_screen = 'main' # initialize screen state to be modified and/or returned
 
