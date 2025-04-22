@@ -62,9 +62,6 @@ class Chart():
             mapped_high = 7 - int((high - self.price_mins['1']) * self.scales['1'])
             mapped_low = 7 - int((low - self.price_mins['1']) * self.scales['1'])
 
-            #mapped_high = max(0, min(7, mapped_high))
-            #mapped_low  = max(0, min(7, mapped_low))
-
 
             for row in range(min(mapped_high, mapped_low), max(mapped_high, mapped_low) + 1):
                 self.sense.set_pixel(i, row, color)
