@@ -4,9 +4,10 @@ import constants
 import json
 
 class Chart():
-    def __init__(self, sense, coin_id):
+    def __init__(self, sense, coin_id, screen):
         self.sense = sense # sense hat
-        self.coin_id = coin_id 
+        self.coin_id = coin_id # coin id for api
+        self.screen = screen # screen id
         self.candles = defaultdict(list) # store for candle data
         self.price_mins = {} # minimum prices of all candles per 'day' parameter
         self.scales = {} # scaling factor (how many pixels per unit of price)
@@ -47,7 +48,7 @@ class Chart():
 
     # display chart
     def display(self):
-        new_screen = 'btc'
+        new_screen = self.screen # set new screen
 
         #todo: for now, choice of day parameter (1) is hardcoded 
 
@@ -61,7 +62,6 @@ class Chart():
             # map the high and low points of the candle to pixel (value from 0 to 7)
             mapped_high = 7 - int((high - self.price_mins['1']) * self.scales['1'])
             mapped_low = 7 - int((low - self.price_mins['1']) * self.scales['1'])
-
 
             for row in range(min(mapped_high, mapped_low), max(mapped_high, mapped_low) + 1):
                 self.sense.set_pixel(i, row, color)
