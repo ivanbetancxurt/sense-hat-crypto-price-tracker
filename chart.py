@@ -66,12 +66,11 @@ class Chart():
             for row in range(min(mapped_high, mapped_low), max(mapped_high, mapped_low) + 1):
                 self.sense.set_pixel(i, row, color)
 
-        # go back to main menu if user clicks #todo: this should happen on hold
+        # go back to main menu if user holds joystick down
         for input in self.sense.stick.get_events():
-            if input.action == 'pressed':
-                print('back to main menu')
-                if input.direction == 'middle':
-                    new_screen = 'main'
-                self.sense.clear()
+            print('back to main menu')
+            if input.direction == 'middle' and input.action == 'held':
+                new_screen = 'main'
+            self.sense.clear()
         
         return new_screen
