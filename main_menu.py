@@ -38,7 +38,7 @@ class MainMenu():
                     self.x = (self.x + 4) % 8
 
                 elif input.direction == 'middle': # display coin name and update screen state
-                    self.touched = False # set flag to false so cursor appears when going back to main menu
+                    self.touched = False # ensure cursor appears in the right place when going back to main menu
                     if (self.x, self.y) == (0, 0):
                         self.sense.show_message('Bitcoin', 0.05)
                         new_screen = 'btc'
