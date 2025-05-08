@@ -63,6 +63,15 @@ class Chart():
 
             for row in range(min(mapped_high, mapped_low), max(mapped_high, mapped_low) + 1):
                 self.sense.set_pixel(i, row, color)
+        
+        day_markers = {
+            0: [2, 4, 5],
+            1: [2, 3, 4, 5],
+            2: [0, 2, 4, 6],
+        }
+        
+        for x in day_markers[self.day_ptr]:
+            self.sense.set_pixel(x, 0, constants.WHITE)
 
         for input in self.sense.stick.get_events():
             print('back to main menu')
