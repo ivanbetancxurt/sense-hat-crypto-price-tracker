@@ -28,3 +28,20 @@ Sense HAT Crypto Price Tracker is a tool powered by [CoinGecko API](https://www.
 </p>
 
 ## Usage
+
+1. Connect to your Raspberry Pi and clone this repository on it.
+
+2. Get a demo API key from [CoinGecko](https://docs.coingecko.com/v3.0.1/reference/setting-up-your-api-key) and add it to a `.env` with the label `API_KEY`. <ins>If you opt to get a pro API key</ins>, make sure you change the `headers` object in `chart.py` to this:
+
+```js
+headers = {
+  'x_cg_pro_api_key': constants.API_KEY
+}
+```
+3. Run the program with this command:
+
+```bash
+python app.py
+```
+
+## Notes
