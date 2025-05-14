@@ -45,3 +45,7 @@ python app.py
 ```
 
 ## Notes
+
+* Indicators representing which chart variation is currently displayed have been added but are not shown in the Bitcoin chart gif.
+* Due to some demo API restrictions, there may be issues getting some charts to display.
+* Once a user clicks a coin, the latest data is fetched and cached and never updated throughout the life of the program. 
